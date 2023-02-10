@@ -1,0 +1,19 @@
+#!/bin/bash
+
+function ctrl_c(){
+        echo -e "\n[!] Saliendo ...\n"
+        exit 1
+}
+
+# Ctrl+C
+trap ctrl_c SIGINT
+
+if [ $1 ];then
+
+        for i in {1..255}; do
+                timeout 1 bash -c "ping -c 1 $1.$i" &>/dev/null && echo "[+] Host $1.$i -Activo" &
+        done; wait
+else
+        echo -e "\n [!] Error de formato $0 X.X.X\n\n"
+        exit 1
+fi
